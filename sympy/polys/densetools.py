@@ -1,6 +1,5 @@
 """Advanced tools for dense recursive polynomials in ``K[x]`` or ``K[X]``. """
 
-from __future__ import print_function, division
 
 from sympy.core.compatibility import range
 from sympy.polys.densearith import (
@@ -256,7 +255,7 @@ def dmp_diff_in(f, m, j, u, K):
 
     """
     if j < 0 or j > u:
-        raise IndexError("0 <= j <= %s expected, got %s" % (u, j))
+        raise IndexError("0 <= j <= {} expected, got {}".format(u, j))
 
     return _rec_diff_in(f, m, u, 0, j, K)
 
@@ -345,7 +344,7 @@ def dmp_eval_in(f, a, j, u, K):
 
     """
     if j < 0 or j > u:
-        raise IndexError("0 <= j <= %s expected, got %s" % (u, j))
+        raise IndexError("0 <= j <= {} expected, got {}".format(u, j))
 
     return _rec_eval_in(f, a, u, 0, j, K)
 
@@ -424,7 +423,7 @@ def dmp_diff_eval_in(f, m, a, j, u, K):
 
     """
     if j > u:
-        raise IndexError("-%s <= j < %s expected, got %s" % (u, u, j))
+        raise IndexError("-{} <= j < {} expected, got {}".format(u, u, j))
     if not j:
         return dmp_eval(dmp_diff(f, m, u, K), a, u, K)
 

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 import sys
 
 
@@ -257,7 +254,7 @@ def test_unicode_names():
         skip("test_unicode_names can only pass in Python 3")
 
 
-    assert parse_expr(u'α') == Symbol(u'α')
+    assert parse_expr('α') == Symbol('α')
 
 
 def test_python3_features():

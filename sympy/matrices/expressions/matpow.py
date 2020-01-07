@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from .matexpr import MatrixExpr, ShapeError, Identity, ZeroMatrix
 from sympy.core import S
 from sympy.core.compatibility import range
@@ -16,7 +14,7 @@ class MatPow(MatrixExpr):
         if not base.is_Matrix:
             raise TypeError("Function parameter should be a matrix")
         exp = _sympify(exp)
-        return super(MatPow, cls).__new__(cls, base, exp)
+        return super().__new__(cls, base, exp)
 
     @property
     def base(self):
@@ -136,5 +134,5 @@ class MatPow(MatrixExpr):
         elif (exp == 0) == True:
             return self.doit()._eval_derivative_matrix_lines(x)
         else:
-            raise NotImplementedError("cannot evaluate %s derived by %s" % (self, x))
+            raise NotImplementedError("cannot evaluate {} derived by {}".format(self, x))
         return newexpr._eval_derivative_matrix_lines(x)

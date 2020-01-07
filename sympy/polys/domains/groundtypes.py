@@ -1,6 +1,5 @@
 """Ground types for various mathematical domains in SymPy. """
 
-from __future__ import print_function, division
 
 from sympy.core.compatibility import builtins, HAS_GMPY
 
@@ -49,11 +48,11 @@ elif HAS_GMPY == 2:
         qdiv as gmpy_qdiv,
     )
 else:
-    class GMPYInteger(object):
+    class GMPYInteger:
         def __init__(self, obj):
             pass
 
-    class GMPYRational(object):
+    class GMPYRational:
         def __init__(self, obj):
             pass
 

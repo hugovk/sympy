@@ -51,7 +51,6 @@ pi(C, Q)
 
 """
 
-from __future__ import print_function, division
 
 import string
 

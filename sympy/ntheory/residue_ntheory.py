@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from sympy.core.compatibility import as_int, range
 from sympy.core.function import Function
 from sympy.core.numbers import igcd, igcdex, mod_inverse
@@ -328,8 +326,7 @@ def sqrt_mod_iter(a, p, domain=int):
             res = _sqrt_mod_prime_power(a, p, 1)
         if res:
             if domain is ZZ:
-                for x in res:
-                    yield x
+                yield from res
             else:
                 for x in res:
                     yield domain(x)

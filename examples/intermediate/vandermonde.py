@@ -118,14 +118,14 @@ def main():
     pprint(V)
 
     print('-'*79)
-    print("Computing the determinant and comparing to \sum_{0<i<j<=3}(a_j - a_i)")
+    print(r"Computing the determinant and comparing to \sum_{0<i<j<=3}(a_j - a_i)")
 
     det_sum = 1
     for j in range(order + 1):
         for i in range(j):
             det_sum *= (tmp_syms[j][0] - tmp_syms[i][0])
 
-    print("""
+    print(r"""
     det(V) = %(det)s
     \sum   = %(sum)s
            = %(sum_expand)s

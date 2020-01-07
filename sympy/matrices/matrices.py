@@ -1,5 +1,3 @@
-from __future__ import division, print_function
-
 from types import FunctionType
 
 from mpmath.libmp.libmpf import prec_to_dps
@@ -719,10 +717,10 @@ class MatrixReductions(MatrixDeterminant):
             # we need two cols to swap. It doesn't matter
             # how they were specified, so gather them together and
             # remove `None`
-            cols = set((col, k, col1, col2)).difference([None])
+            cols = {col, k, col1, col2}.difference([None])
             if len(cols) > 2:
                 # maybe the user left `k` by mistake?
-                cols = set((col, col1, col2)).difference([None])
+                cols = {col, col1, col2}.difference([None])
             if len(cols) != 2:
                 raise ValueError("For a {0} operation 'n<->m' you must provide the "
                                  "kwargs `{0}1` and `{0}2`".format(error_str))
@@ -2333,7 +2331,7 @@ class MatrixDeprecated(MatrixCommon):
             if is_sequence(b):
                 if len(b) != self.cols and len(b) != self.rows:
                     raise ShapeError(
-                        "Dimensions incorrect for dot product: %s, %s" % (
+                        "Dimensions incorrect for dot product: {}, {}".format(
                             self.shape, len(b)))
                 return self.dot(Matrix(b))
             else:
@@ -2353,7 +2351,7 @@ class MatrixDeprecated(MatrixCommon):
         elif mat.rows == b.rows:
             return mat.T.dot(b)
         else:
-            raise ShapeError("Dimensions incorrect for dot product: %s, %s" % (
+            raise ShapeError("Dimensions incorrect for dot product: {}, {}".format(
                 self.shape, b.shape))
 
 
@@ -2555,7 +2553,7 @@ class MatrixBase(MatrixDeprecated,
             return doit
         else:
             raise AttributeError(
-                "%s has no attribute %s." % (self.__class__.__name__, attr))
+                "{} has no attribute {}.".format(self.__class__.__name__, attr))
 
     def __len__(self):
         """Return the number of elements of ``self``.
@@ -2623,7 +2621,7 @@ class MatrixBase(MatrixDeprecated,
 
     def __str__(self):
         if self.rows == 0 or self.cols == 0:
-            return 'Matrix(%s, %s, [])' % (self.rows, self.cols)
+            return 'Matrix({}, {}, [])'.format(self.rows, self.cols)
         return "Matrix(%s)" % str(self.tolist())
 
     def _format_str(self, printer=None):
@@ -2632,7 +2630,7 @@ class MatrixBase(MatrixDeprecated,
             printer = StrPrinter()
         # Handle zero dimensions:
         if self.rows == 0 or self.cols == 0:
-            return 'Matrix(%s, %s, [])' % (self.rows, self.cols)
+            return 'Matrix({}, {}, [])'.format(self.rows, self.cols)
         if self.rows == 1:
             return "Matrix([%s])" % self.table(printer, rowsep=',\n')
         return "Matrix([\n%s])" % self.table(printer, rowsep=',\n')
@@ -2798,7 +2796,7 @@ class MatrixBase(MatrixDeprecated,
                     cols = 1 if rows else 0
                 elif evaluate and all(ismat(i) for i in dat):
                     # a column as a list of matrices
-                    ncol = set(i.cols for i in dat if any(i.shape))
+                    ncol = {i.cols for i in dat if any(i.shape)}
                     if ncol:
                         if len(ncol) != 1:
                             raise ValueError('mismatched dimensions')
@@ -3305,7 +3303,7 @@ class MatrixBase(MatrixDeprecated,
             if is_sequence(b):
                 if len(b) != self.cols and len(b) != self.rows:
                     raise ShapeError(
-                        "Dimensions incorrect for dot product: %s, %s" % (
+                        "Dimensions incorrect for dot product: {}, {}".format(
                             self.shape, len(b)))
                 return self.dot(Matrix(b))
             else:
@@ -3322,7 +3320,7 @@ class MatrixBase(MatrixDeprecated,
                 useinstead="* to take matrix products").warn()
             return mat._legacy_array_dot(b)
         if len(mat) != len(b):
-            raise ShapeError("Dimensions incorrect for dot product: %s, %s" % (self.shape, b.shape))
+            raise ShapeError("Dimensions incorrect for dot product: {}, {}".format(self.shape, b.shape))
         n = len(mat)
         if mat.shape != (1, n):
             mat = mat.reshape(1, n)
@@ -4829,7 +4827,7 @@ class MatrixBase(MatrixDeprecated,
         A_pinv = self.pinv()
         if arbitrary_matrix is None:
             rows, cols = A.cols, B.cols
-            w = symbols('w:{0}_:{1}'.format(rows, cols), cls=Dummy)
+            w = symbols('w:{}_:{}'.format(rows, cols), cls=Dummy)
             arbitrary_matrix = self.__class__(cols, rows, w).T
         return A_pinv * B + (eye(A.cols) - A_pinv * A) * arbitrary_matrix
 

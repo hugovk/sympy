@@ -123,7 +123,7 @@ def union_sets(a, b): # noqa:F811
         open_left = a.left_open and a.start not in b
         open_right = a.right_open and a.end not in b
         new_a = Interval(a.start, a.end, open_left, open_right)
-        return set((new_a, b))
+        return {new_a, b}
     return None
 
 @dispatch(FiniteSet, FiniteSet)
@@ -134,8 +134,8 @@ def union_sets(a, b): # noqa:F811
 def union_sets(a, b): # noqa:F811
     # If `b` set contains one of my elements, remove it from `a`
     if any(b.contains(x) == True for x in a):
-        return set((
-            FiniteSet(*[x for x in a if not b.contains(x)]), b))
+        return {
+            FiniteSet(*[x for x in a if not b.contains(x)]), b}
     return None
 
 @dispatch(Set, Set)

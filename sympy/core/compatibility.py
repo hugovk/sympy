@@ -3,7 +3,6 @@ Reimplementations of constructs introduced in later versions of Python than
 we support. Also some functions that are needed SymPy-wide and are located
 here for easy import.
 """
-from __future__ import print_function, division
 
 import operator
 from collections import defaultdict
@@ -128,7 +127,7 @@ else:
     def u_decode(x):
         return x.decode('utf-8')
 
-    class Iterator(object):
+    class Iterator:
         def next(self):
             return type(self).__next__(self)
 
@@ -433,7 +432,7 @@ def as_int(n, strict=True):
             raise TypeError
         return result
     except TypeError:
-        raise ValueError('%s is not an integer' % (n,))
+        raise ValueError('{} is not an integer'.format(n))
 
 
 def default_sort_key(item, order=None):
@@ -723,8 +722,7 @@ def ordered(seq, keys=None, default=True, warn=False):
                 if len(u) > 1:
                     raise ValueError(
                         'not enough keys to break ties: %s' % u)
-        for v in d[k]:
-            yield v
+        yield from d[k]
         d.pop(k)
 
 # If HAS_GMPY is 0, no supported version of gmpy is available. Otherwise,
@@ -804,7 +802,7 @@ class _HashedSeq(list):
 
 def _make_key(args, kwds, typed,
              kwd_mark = (object(),),
-             fasttypes = set((int, str, frozenset, type(None))),
+             fasttypes = {int, str, frozenset, type(None)},
              sorted=sorted, tuple=tuple, type=type, len=len):
     'Make a cache key from optionally typed positional and keyword arguments'
     key = args

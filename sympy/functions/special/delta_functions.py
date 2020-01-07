@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from sympy.core import S, sympify, diff
 from sympy.core.decorators import deprecated
 from sympy.core.function import Function, ArgumentIndexError
@@ -542,7 +540,7 @@ class Heaviside(Function):
         elif arg is S.NaN:
             return S.NaN
         elif fuzzy_not(im(arg).is_zero):
-            raise ValueError("Function defined only for Real Values. Complex part: %s  found in %s ." % (repr(im(arg)), repr(arg)) )
+            raise ValueError("Function defined only for Real Values. Complex part: {}  found in {} .".format(repr(im(arg)), repr(arg)) )
 
     def _eval_rewrite_as_Piecewise(self, arg, H0=None, **kwargs):
         """

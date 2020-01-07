@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from sympy.core.compatibility import range
 from .cartan_type import CartanType
 from mpmath import fac

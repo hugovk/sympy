@@ -1,6 +1,5 @@
 """User-friendly public interface to polynomial functions. """
 
-from __future__ import print_function, division
 
 from sympy.core import (
     S, Basic, Expr, I, Integer, Add, Mul, Dummy, Tuple
@@ -131,7 +130,7 @@ class Poly(Expr):
             raise PolynomialError(
                 "invalid polynomial representation: %s" % rep)
         elif rep.lev != len(gens) - 1:
-            raise PolynomialError("invalid arguments: %s, %s" % (rep, gens))
+            raise PolynomialError("invalid arguments: {}, {}".format(rep, gens))
 
         obj = Basic.__new__(cls)
 
@@ -240,7 +239,7 @@ class Poly(Expr):
         return (self.rep, self.gens)
 
     def __hash__(self):
-        return super(Poly, self).__hash__()
+        return super().__hash__()
 
     @property
     def free_symbols(self):
@@ -392,7 +391,7 @@ class Poly(Expr):
             try:
                 return f.rep.dom, f.per, f.rep, f.rep.per(f.rep.dom.from_sympy(g))
             except CoercionFailed:
-                raise UnificationFailed("can't unify %s with %s" % (f, g))
+                raise UnificationFailed("can't unify {} with {}".format(f, g))
 
         if isinstance(f.rep, DMP) and isinstance(g.rep, DMP):
             gens = _unify_gens(f.gens, g.gens)
@@ -421,7 +420,7 @@ class Poly(Expr):
             else:
                 G = g.rep.convert(dom)
         else:
-            raise UnificationFailed("can't unify %s with %s" % (f, g))
+            raise UnificationFailed("can't unify {} with {}".format(f, g))
 
         cls = f.__class__
 
@@ -581,7 +580,7 @@ class Poly(Expr):
                 gens[gens.index(x)] = y
                 return f.per(f.rep, gens=gens)
 
-        raise PolynomialError("can't replace %s with %s in %s" % (x, y, f))
+        raise PolynomialError("can't replace {} with {} in {}".format(x, y, f))
 
     def reorder(f, *gens, **args):
         """
@@ -668,7 +667,7 @@ class Poly(Expr):
                 index = f.gens.index(gen)
             except ValueError:
                 raise GeneratorsError(
-                    "%s doesn't have %s as generator" % (f, gen))
+                    "{} doesn't have {} as generator".format(f, gen))
             else:
                 indices.add(index)
 
@@ -1006,7 +1005,7 @@ class Poly(Expr):
                     index = gens.index(gen)
                 except ValueError:
                     raise GeneratorsError(
-                        "%s doesn't have %s as generator" % (f, gen))
+                        "{} doesn't have {} as generator".format(f, gen))
                 else:
                     gens[index] = value
 
@@ -2361,7 +2360,7 @@ class Poly(Expr):
             result = f.rep.eval(a, j)
         except CoercionFailed:
             if not auto:
-                raise DomainError("can't evaluate at %s in %s" % (a, f.rep.dom))
+                raise DomainError("can't evaluate at {} in {}".format(a, f.rep.dom))
             else:
                 a_domain, [a] = construct_domain([a])
                 new_domain = f.get_domain().unify_with_symbols(a_domain, f.gens)
@@ -3592,7 +3591,7 @@ class Poly(Expr):
                 sorted(roots, key=lambda r: (1 if r.imag else 0, r.real, abs(r.imag), sign(r.imag)))))
         except NoConvergence:
             raise NoConvergence(
-                'convergence to root failed; try n < %s or maxsteps > %s' % (
+                'convergence to root failed; try n < {} or maxsteps > {}'.format(
                 n, maxsteps))
         finally:
             mpmath.mp.dps = dps
@@ -4172,7 +4171,7 @@ class PurePoly(Poly):
         return (self.rep,)
 
     def __hash__(self):
-        return super(PurePoly, self).__hash__()
+        return super().__hash__()
 
     @property
     def free_symbols(self):
@@ -4229,13 +4228,13 @@ class PurePoly(Poly):
             try:
                 return f.rep.dom, f.per, f.rep, f.rep.per(f.rep.dom.from_sympy(g))
             except CoercionFailed:
-                raise UnificationFailed("can't unify %s with %s" % (f, g))
+                raise UnificationFailed("can't unify {} with {}".format(f, g))
 
         if len(f.gens) != len(g.gens):
-            raise UnificationFailed("can't unify %s with %s" % (f, g))
+            raise UnificationFailed("can't unify {} with {}".format(f, g))
 
         if not (isinstance(f.rep, DMP) and isinstance(g.rep, DMP)):
-            raise UnificationFailed("can't unify %s with %s" % (f, g))
+            raise UnificationFailed("can't unify {} with {}".format(f, g))
 
         cls = f.__class__
         gens = f.gens

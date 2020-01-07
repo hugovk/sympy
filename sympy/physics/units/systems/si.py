@@ -5,7 +5,6 @@ Added kelvin, candela and mole.
 
 """
 
-from __future__ import division
 
 from sympy.physics.units import DimensionSystem, Dimension, dHg0
 

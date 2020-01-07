@@ -1,4 +1,3 @@
-
 from sympy.external import import_module
 from sympy.utilities.pytest import raises
 import ctypes

@@ -6,7 +6,6 @@ NOTE
 at present this is mainly needed for facts.py , feel free however to improve
 this stuff for general purpose.
 """
-from __future__ import print_function, division
 
 from sympy.core.compatibility import range, string_types
 
@@ -217,7 +216,7 @@ def fuzzy_nand(args):
     return fuzzy_not(fuzzy_and(args))
 
 
-class Logic(object):
+class Logic:
     """Logical expression"""
     # {} 'op' -> LogicClass
     op_2class = {}
@@ -260,7 +259,7 @@ class Logic(object):
         return (a > b) - (a < b)
 
     def __str__(self):
-        return '%s(%s)' % (self.__class__.__name__,
+        return '{}({})'.format(self.__class__.__name__,
                            ', '.join(str(a) for a in self.args))
 
     __repr__ = __str__
@@ -280,7 +279,7 @@ class Logic(object):
             if term in '&|':
                 if schedop is not None:
                     raise ValueError(
-                        'double op forbidden: "%s %s"' % (term, schedop))
+                        'double op forbidden: "{} {}"'.format(term, schedop))
                 if lexpr is None:
                     raise ValueError(
                         '%s cannot be in the beginning of expression' % term)
@@ -302,7 +301,7 @@ class Logic(object):
             # this should be atom
             if lexpr is not None:
                 raise ValueError(
-                    'missing op between "%s" and "%s"' % (lexpr, term))
+                    'missing op between "{}" and "{}"'.format(lexpr, term))
 
             lexpr = term
 
@@ -413,7 +412,7 @@ class Not(Logic):
             return arg
 
         else:
-            raise ValueError('Not: unknown argument %r' % (arg,))
+            raise ValueError('Not: unknown argument {!r}'.format(arg))
 
     @property
     def arg(self):

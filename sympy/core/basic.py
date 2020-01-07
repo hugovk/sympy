@@ -1,5 +1,4 @@
 """Base class for all the objects in SymPy"""
-from __future__ import print_function, division
 from collections import defaultdict
 from itertools import chain
 
@@ -529,7 +528,7 @@ class Basic(with_metaclass(ManagedProperties)):
 
     @property
     def expr_free_symbols(self):
-        return set([])
+        return set()
 
     def as_dummy(self):
         """Return the expression with any objects having structurally
@@ -571,7 +570,7 @@ class Basic(with_metaclass(ManagedProperties)):
             # replace bound
             x = x.xreplace(c)
             # undo masking
-            x = x.xreplace(dict((v, k) for k, v in d.items()))
+            x = x.xreplace({v: k for k, v in d.items()})
             return x
         return self.replace(
             lambda x: hasattr(x, 'bound_symbols'),
@@ -600,7 +599,7 @@ class Basic(with_metaclass(ManagedProperties)):
         v = self.bound_symbols
         # this free will include bound symbols that are not part of
         # self's bound symbols
-        free = set([i.name for i in self.atoms(Symbol) - set(v)])
+        free = {i.name for i in self.atoms(Symbol) - set(v)}
         for v in v:
             d = next(dums)
             if v.is_Symbol:
@@ -2019,12 +2018,10 @@ class preorder_traversal(Iterator):
                 else:
                     args = ordered(args)
             for arg in args:
-                for subtree in self._preorder_traversal(arg, keys):
-                    yield subtree
+                yield from self._preorder_traversal(arg, keys)
         elif iterable(node):
             for item in node:
-                for subtree in self._preorder_traversal(item, keys):
-                    yield subtree
+                yield from self._preorder_traversal(item, keys)
 
     def skip(self):
         """

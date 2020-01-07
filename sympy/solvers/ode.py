@@ -229,7 +229,6 @@ code is tested extensively in ``test_ode.py``, so if anything is broken, one
 of those tests will surely fail.
 
 """
-from __future__ import print_function, division
 
 from collections import defaultdict
 from itertools import islice
@@ -5707,14 +5706,14 @@ def _solve_undetermined_coefficients(eq, func, order, match):
     gensols = r['list']
     gsol = r['sol']
     trialset = r['trialset']
-    notneedset = set([])
+    notneedset = set()
     global collectterms
     if len(gensols) != order:
         raise NotImplementedError("Cannot find " + str(order) +
         " solutions to the homogeneous equation necessary to apply" +
         " undetermined coefficients to " + str(eq) +
         " (number of terms != order)")
-    usedsin = set([])
+    usedsin = set()
     mult = 0  # The multiplicity of the root
     getmult = True
     for i, reroot, imroot in collectterms:
@@ -5860,7 +5859,7 @@ def _undetermined_coefficients_match(expr, x):
         else:
             return False
 
-    def _get_trial_set(expr, x, exprs=set([])):
+    def _get_trial_set(expr, x, exprs=set()):
         r"""
         Returns a set of trial terms for undetermined coefficients.
 
@@ -5896,7 +5895,7 @@ def _undetermined_coefficients_match(expr, x):
         else:
             term = _remove_coefficient(expr, x)
             tmpset = exprs.union({term})
-            oldset = set([])
+            oldset = set()
             while tmpset != oldset:
                 # If you get stuck in this loop, then _test_term is probably
                 # broken
@@ -6856,7 +6855,7 @@ def lie_heuristic_bivariate(match, comp=False):
                     etared = etaeq.subs(soldict)
                     # Scaling is done by substituting one for the parameters
                     # This can be any number except zero.
-                    dict_ = dict((sym, 1) for sym in symset)
+                    dict_ = {sym: 1 for sym in symset}
                     inf = {eta: etared.subs(dict_).subs(y, func),
                         xi: xired.subs(dict_).subs(y, func)}
                     return [inf]
@@ -6919,7 +6918,7 @@ def lie_heuristic_chi(match, comp=False):
                         soldict = soldict[0]
                     if any(soldict.values()):
                         chieq = chieq.subs(soldict)
-                        dict_ = dict((sym, 1) for sym in solsyms)
+                        dict_ = {sym: 1 for sym in solsyms}
                         chieq = chieq.subs(dict_)
                         # After finding chi, the main aim is to find out
                         # eta, xi by the equation eta = xi*h + chi

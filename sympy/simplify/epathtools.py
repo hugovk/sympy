@@ -1,12 +1,11 @@
 """Tools for manipulation of expressions using paths. """
 
-from __future__ import print_function, division
 from sympy.core.compatibility import range
 
 from sympy.core import Basic
 
 
-class EPath(object):
+class EPath:
     r"""
     Manipulate expressions using paths.
 
@@ -117,7 +116,7 @@ class EPath(object):
         return obj
 
     def __repr__(self):
-        return "%s(%r)" % (self.__class__.__name__, self._path)
+        return "{}({!r})".format(self.__class__.__name__, self._path)
 
     def _get_ordered_args(self, expr):
         """Sort ``expr.args`` using printing order. """

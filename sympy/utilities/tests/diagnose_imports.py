@@ -4,7 +4,6 @@
 Import diagnostics. Run bin/diagnose_imports.py --help for details.
 """
 
-from __future__ import print_function
 
 if __name__ == "__main__":
 
@@ -65,7 +64,7 @@ if __name__ == "__main__":
     (options, args) = option_parser.parse_args()
     if args:
         option_parser.error(
-            'Unexpected arguments %s (try %s --help)' % (args, sys.argv[0]))
+            'Unexpected arguments {} (try {} --help)'.format(args, sys.argv[0]))
     if options.problems > 1:
         option_parser.error('--problems must not be given more than once.')
     if options.origins > 1:
@@ -91,7 +90,7 @@ if __name__ == "__main__":
 
     builtin_import = builtins.__import__
 
-    class Definition(object):
+    class Definition:
         """Information about a symbol's definition."""
         def __init__(self, name, value, definer):
             self.name = name
@@ -104,7 +103,7 @@ if __name__ == "__main__":
         def __ne__(self, other):
             return not (self == other)
         def __repr__(self):
-            return 'Definition(%s, ..., %s)' % (
+            return 'Definition({}, ..., {})'.format(
                 repr(self.name), repr(self.definer))
 
     symbol_definers = {} # Maps each function/variable to name of module to define it
@@ -147,7 +146,7 @@ if __name__ == "__main__":
         importer_filename = caller_frame.filename
         importer_module = globals['__name__']
         if importer_filename == caller_frame.filename:
-            importer_reference = '%s line %s' % (
+            importer_reference = '{} line {}'.format(
                 importer_filename, str(caller_frame.lineno))
         else:
             importer_reference = importer_filename

@@ -1,6 +1,5 @@
 """sympify -- convert objects SymPy internal format"""
 
-from __future__ import print_function, division
 
 from inspect import getmro
 
@@ -15,7 +14,7 @@ class SympifyError(ValueError):
 
     def __str__(self):
         if self.base_exc is None:
-            return "SympifyError: %r" % (self.expr,)
+            return "SympifyError: {!r}".format(self.expr)
 
         return ("Sympify of expression '%s' failed, because of exception being "
             "raised:\n%s: %s" % (self.expr, self.base_exc.__class__.__name__,
@@ -23,7 +22,7 @@ class SympifyError(ValueError):
 
 converter = {}  # See sympify docstring.
 
-class CantSympify(object):
+class CantSympify:
     """
     Mix in this trait to a class to disallow sympification of its instances.
 

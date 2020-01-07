@@ -1,5 +1,3 @@
-from __future__ import division, print_function
-
 import copy
 from collections import defaultdict
 
@@ -145,7 +143,7 @@ class SparseMatrix(MatrixBase):
                     # no collisions
                     if v:
                         if (i, j) in self._smat and v != self._smat[i, j]:
-                            raise ValueError('collision at %s' % ((i, j),))
+                            raise ValueError('collision at {}'.format((i, j)))
                         self._smat[i, j] = v
                 # manual copy, copy.deepcopy() doesn't work
                 for key, v in args[2].items():

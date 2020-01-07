@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from sympy import Symbol, sympify
 from sympy.core.compatibility import is_sequence, range, string_types
 from sympy.geometry.entity import GeometryEntity

@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 import random
 from collections import defaultdict
 
@@ -315,8 +313,7 @@ class Cycle(dict):
         return as_int(arg)
 
     def __iter__(self):
-        for i in self.list():
-            yield i
+        yield from self.list()
 
     def __call__(self, *other):
         """Return product of cycles processed from R to L.
@@ -982,7 +979,7 @@ class Permutation(Atom):
         Permutation([2, 1, 3, 0])
 
         """
-        p = super(Permutation, cls).__new__(cls)
+        p = super().__new__(cls)
         p._array_form = perm
         p._size = len(perm)
         return p
@@ -1543,8 +1540,7 @@ class Permutation(Atom):
         >>> list(Permutation(range(3)))
         [0, 1, 2]
         """
-        for i in self.array_form:
-            yield i
+        yield from self.array_form
 
     def __repr__(self):
         from sympy.printing.repr import srepr
@@ -3017,5 +3013,5 @@ class AppliedPermutation(Expr):
             if x.is_Integer:
                 return perm.apply(x)
 
-        obj = super(AppliedPermutation, cls).__new__(cls, perm, x)
+        obj = super().__new__(cls, perm, x)
         return obj

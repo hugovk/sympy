@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from sympy.core.assumptions import StdFactKB, _assume_defined
 from sympy.core.compatibility import (string_types, range, is_sequence,
     ordered)
@@ -281,8 +279,8 @@ class Symbol(AtomicExpr, Boolean):
 
     @property
     def assumptions0(self):
-        return dict((key, value) for key, value
-                in self._assumptions.items() if value is not None)
+        return {key: value for key, value
+                in self._assumptions.items() if value is not None}
 
     @cacheit
     def sort_key(self, order=None):
@@ -491,7 +489,7 @@ class Wild(Symbol):
         return obj
 
     def _hashable_content(self):
-        return super(Wild, self)._hashable_content() + (self.exclude, self.properties)
+        return super()._hashable_content() + (self.exclude, self.properties)
 
     # TODO add check against another Wild
     def matches(self, expr, repl_dict={}, old=False):

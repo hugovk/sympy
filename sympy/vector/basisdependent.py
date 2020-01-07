@@ -210,7 +210,7 @@ class BasisDependentAdd(BasisDependent, Add):
 
         # Build object
         newargs = [x * components[x] for x in components]
-        obj = super(BasisDependentAdd, cls).__new__(cls,
+        obj = super().__new__(cls,
                                                     *newargs, **options)
         if isinstance(obj, Mul):
             return cls._mul_func(*obj.args)
@@ -270,7 +270,7 @@ class BasisDependentMul(BasisDependent, Mul):
                        x in expr.args]
             return cls._add_func(*newargs)
 
-        obj = super(BasisDependentMul, cls).__new__(cls, measure_number,
+        obj = super().__new__(cls, measure_number,
                                                     expr._base_instance,
                                                     *extra_args,
                                                     **options)
@@ -303,7 +303,7 @@ class BasisDependentZero(BasisDependent):
     components = {}
 
     def __new__(cls):
-        obj = super(BasisDependentZero, cls).__new__(cls)
+        obj = super().__new__(cls)
         # Pre-compute a specific hash value for the zero vector
         # Use the same one always
         obj._hash = tuple([S.Zero, cls]).__hash__()

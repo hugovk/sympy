@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from itertools import product
 import re
 from sympy import sympify
@@ -24,7 +22,7 @@ def _deco(cls):
 
 
 @_deco
-class MathematicaParser(object):
+class MathematicaParser:
     '''An instance of this class converts a string of a basic Mathematica
     expression to SymPy style. Output is string type.'''
 

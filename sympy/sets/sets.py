@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from collections import defaultdict
 import inspect
 
@@ -750,8 +748,7 @@ class ProductSet(Set):
         def _flatten(sets):
             for s in sets:
                 if s.is_ProductSet:
-                    for s2 in _flatten(s.sets):
-                        yield s2
+                    yield from _flatten(s.sets)
                 else:
                     yield s
         return ProductSet(*_flatten(self.sets))
@@ -1404,7 +1401,7 @@ class Intersection(Set, LatticeOp):
         finite_candidates.sort(key=len)
 
         for s in finite_candidates + others:
-            other_sets = set(self.args) - set((s,))
+            other_sets = set(self.args) - {s}
             other = Intersection(*other_sets, evaluate=False)
             completed = True
             for x in s:
@@ -1929,7 +1926,7 @@ class FiniteSet(Set, EvalfMixin):
             return None
 
         fs_test = lambda arg: isinstance(arg, Set) and arg.is_FiniteSet
-        if not all((fs_test(arg) for arg in args)):
+        if not all(fs_test(arg) for arg in args):
             return None
 
         biggest = max(args, key=len)
@@ -2212,14 +2209,14 @@ def simplify_union(args):
     while new_args:
         for s in args:
             new_args = False
-            for t in args - set((s,)):
+            for t in args - {s}:
                 new_set = union_sets(s, t)
                 # This returns None if s does not know how to intersect
                 # with t. Returns the newly intersected set otherwise
                 if new_set is not None:
                     if not isinstance(new_set, set):
-                        new_set = set((new_set, ))
-                    new_args = (args - set((s, t))).union(new_set)
+                        new_set = {new_set}
+                    new_args = (args - {s, t}).union(new_set)
                     break
             if new_args:
                 args = new_args
@@ -2263,7 +2260,7 @@ def simplify_intersection(args):
     # If any of the sets are unions, return a Union of Intersections
     for s in args:
         if s.is_Union:
-            other_sets = set(args) - set((s,))
+            other_sets = set(args) - {s}
             if len(other_sets) > 0:
                 other = Intersection(*other_sets)
                 return Union(*(Intersection(arg, other) for arg in s.args))
@@ -2289,13 +2286,13 @@ def simplify_intersection(args):
     while new_args:
         for s in args:
             new_args = False
-            for t in args - set((s,)):
+            for t in args - {s}:
                 new_set = intersection_sets(s, t)
                 # This returns None if s does not know how to intersect
                 # with t. Returns the newly intersected set otherwise
 
                 if new_set is not None:
-                    new_args = (args - set((s, t))).union(set((new_set, )))
+                    new_args = (args - {s, t}).union({new_set})
                     break
             if new_args:
                 args = new_args

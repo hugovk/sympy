@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from collections import defaultdict
 from functools import cmp_to_key
 
@@ -618,7 +616,7 @@ class Add(Expr, AssocOp):
     def _eval_is_extended_positive(self):
         from sympy.core.exprtools import _monotonic_sign
         if self.is_number:
-            return super(Add, self)._eval_is_extended_positive()
+            return super()._eval_is_extended_positive()
         c, a = self.as_coeff_Add()
         if not c.is_zero:
             v = _monotonic_sign(a)
@@ -702,7 +700,7 @@ class Add(Expr, AssocOp):
     def _eval_is_extended_negative(self):
         from sympy.core.exprtools import _monotonic_sign
         if self.is_number:
-            return super(Add, self)._eval_is_extended_negative()
+            return super()._eval_is_extended_negative()
         c, a = self.as_coeff_Add()
         if not c.is_zero:
             v = _monotonic_sign(a)
@@ -1086,7 +1084,7 @@ class Add(Expr, AssocOp):
 
     def __neg__(self):
         if not global_parameters.distribute:
-            return super(Add, self).__neg__()
+            return super().__neg__()
         return Add(*[-i for i in self.args])
 
 

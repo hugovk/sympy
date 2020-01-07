@@ -1,5 +1,3 @@
-from __future__ import print_function, division, absolute_import
-
 from collections import OrderedDict
 from distutils.errors import CompileError
 import os
@@ -13,7 +11,7 @@ from .util import (
 from sympy.core.compatibility import string_types
 
 
-class CompilerRunner(object):
+class CompilerRunner:
     """ CompilerRunner base class.
 
     Parameters
@@ -80,7 +78,7 @@ class CompilerRunner(object):
                 preferred_vendor = os.environ.get('SYMPY_COMPILER_VENDOR', None)
             self.compiler_name, self.compiler_binary, self.compiler_vendor = self.find_compiler(preferred_vendor)
             if self.compiler_binary is None:
-                raise ValueError("No compiler found (searched: {0})".format(', '.join(self.compiler_dict.values())))
+                raise ValueError("No compiler found (searched: {})".format(', '.join(self.compiler_dict.values())))
         self.define = define or []
         self.undef = undef or []
         self.include_dirs = include_dirs or []
@@ -186,7 +184,7 @@ class CompilerRunner(object):
 
         # Error handling
         if self.cmd_returncode != 0:
-            msg = "Error executing '{0}' in {1} (exited status {2}):\n {3}\n".format(
+            msg = "Error executing '{}' in {} (exited status {}):\n {}\n".format(
                 ' '.join(self.cmd()), self.cwd, str(self.cmd_returncode), self.cmd_outerr
             )
             raise CompileError(msg)

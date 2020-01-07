@@ -10,7 +10,6 @@ no time dimension (but a velocity dimension instead) - in the basis - so the
 question of adding time to length has no meaning.
 """
 
-from __future__ import division
 
 import collections
 
@@ -21,7 +20,7 @@ from sympy.core.power import Pow
 from sympy.utilities.exceptions import SymPyDeprecationWarning
 
 
-class _QuantityMapper(object):
+class _QuantityMapper:
 
     _quantity_scale_factors_global = {}
     _quantity_dimensional_equivalence_map_global = {}
@@ -187,7 +186,7 @@ class Dimension(Expr):
         if self.symbol is None:
             return "Dimension(%s)" % (self.name)
         else:
-            return "Dimension(%s, %s)" % (self.name, self.symbol)
+            return "Dimension({}, {})".format(self.name, self.symbol)
 
     def __repr__(self):
         return self.__str__()
@@ -203,7 +202,7 @@ class Dimension(Expr):
                 raise TypeError("cannot sum dimension and quantity")
             if isinstance(other, Dimension) and self == other:
                 return self
-            return super(Dimension, self).__add__(other)
+            return super().__add__(other)
         return self
 
     def __radd__(self, other):
@@ -235,7 +234,7 @@ class Dimension(Expr):
                 return Dimension(self.name*other.name)
             if not other.free_symbols:  # other.is_number cannot be used
                 return self
-            return super(Dimension, self).__mul__(other)
+            return super().__mul__(other)
         return self
 
     def __rmul__(self, other):
@@ -363,7 +362,7 @@ class DimensionSystem(Basic, _QuantityMapper):
             elif isinstance(dim, Symbol):
                 return dim
             else:
-                raise TypeError("unrecognized type %s for %s" % (type(dim), dim))
+                raise TypeError("unrecognized type {} for {}".format(type(dim), dim))
 
         for dim in dimensional_dependencies.keys():
             dim = parse_dim(dim)
@@ -553,7 +552,7 @@ class DimensionSystem(Basic, _QuantityMapper):
 
         List all canonical dimension names.
         """
-        dimset = set([])
+        dimset = set()
         for i in self.base_dims:
             dimset.update(set(self.get_dimensional_dependencies(i).keys()))
         return tuple(sorted(dimset, key=str))

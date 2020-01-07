@@ -1,7 +1,6 @@
 """
 Integer factorization
 """
-from __future__ import print_function, division
 
 import random
 import math
@@ -250,7 +249,7 @@ def multiplicity(p, n):
                     multiplicity(p.q, n.p),
                     multiplicity(p.p, n.q))
                 return like - cross
-        raise ValueError('expecting ints or fractions, got %s and %s' % (p, n))
+        raise ValueError('expecting ints or fractions, got {} and {}'.format(p, n))
 
     if n == 0:
         raise ValueError('no such integer exists: multiplicity of %s is not-defined' %(n))
@@ -1398,8 +1397,7 @@ def _divisors(n, proper=False):
             if p != n:
                 yield p
     else:
-        for p in rec_gen():
-            yield p
+        yield from rec_gen()
 
 
 def divisors(n, generator=False, proper=False):

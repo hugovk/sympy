@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from sympy.utilities.exceptions import SymPyDeprecationWarning
 from .add import _unevaluated_Add, Add
 from .basic import S
@@ -631,15 +629,15 @@ class Equality(Relational):
     def binary_symbols(self):
         if S.true in self.args or S.false in self.args:
             if self.lhs.is_Symbol:
-                return set([self.lhs])
+                return {self.lhs}
             elif self.rhs.is_Symbol:
-                return set([self.rhs])
+                return {self.rhs}
         return set()
 
     def _eval_simplify(self, **kwargs):
         from sympy.solvers.solveset import linear_coeffs
         # standard simplify
-        e = super(Equality, self)._eval_simplify(**kwargs)
+        e = super()._eval_simplify(**kwargs)
         if not isinstance(e, Equality):
             return e
         free = self.free_symbols
@@ -736,9 +734,9 @@ class Unequality(Relational):
     def binary_symbols(self):
         if S.true in self.args or S.false in self.args:
             if self.lhs.is_Symbol:
-                return set([self.lhs])
+                return {self.lhs}
             elif self.rhs.is_Symbol:
-                return set([self.rhs])
+                return {self.rhs}
         return set()
 
     def _eval_simplify(self, **kwargs):

@@ -1,6 +1,5 @@
 """Groebner bases algorithms. """
 
-from __future__ import print_function, division
 
 from sympy.core.compatibility import range
 from sympy.core.symbol import Dummy
@@ -249,7 +248,7 @@ def _buchberger(f, ring):
     Gr = set()
 
     for ig in G:
-        ht = normal(f[ig], G - set([ig]))
+        ht = normal(f[ig], G - {ig})
 
         if ht:
             Gr.add(ht[1])

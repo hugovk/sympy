@@ -2,7 +2,6 @@
 Adaptive numerical evaluation of SymPy expressions, using mpmath
 for mathematical functions.
 """
-from __future__ import print_function, division
 
 import math
 
@@ -1363,7 +1362,7 @@ def evalf(x, prec, options):
     return r
 
 
-class EvalfMixin(object):
+class EvalfMixin:
     """Mixin class adding evalf capabililty."""
 
     __slots__ = []

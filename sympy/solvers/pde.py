@@ -32,7 +32,6 @@ more information on each (run help(pde)):
     variable coefficients.
 
 """
-from __future__ import print_function, division
 
 from itertools import combinations_with_replacement
 from sympy.simplify import simplify

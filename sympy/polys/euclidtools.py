@@ -1,6 +1,5 @@
 """Euclidean algorithms, GCDs, LCMs and polynomial remainder sequences. """
 
-from __future__ import print_function, division
 
 from sympy.core.compatibility import range
 from sympy.ntheory import nextprime

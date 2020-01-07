@@ -1,7 +1,6 @@
 """
 Boolean algebra module for SymPy
 """
-from __future__ import print_function, division
 
 from collections import defaultdict
 from itertools import combinations, product
@@ -478,7 +477,7 @@ class BooleanFunction(Application, Boolean):
     @classmethod
     def _to_nnf(cls, *args, **kwargs):
         simplify = kwargs.get('simplify', True)
-        argset = set([])
+        argset = set()
         for arg in args:
             if not is_literal(arg):
                 arg = arg.to_nnf(simplify)
@@ -703,7 +702,7 @@ class And(LatticeOp, BooleanFunction):
         from sympy.core.relational import Equality, Relational
         from sympy.solvers.solveset import linear_coeffs
         # standard simplify
-        rv = super(And, self)._eval_simplify(**kwargs)
+        rv = super()._eval_simplify(**kwargs)
         if not isinstance(rv, And):
             return rv
 
@@ -846,7 +845,7 @@ class Or(LatticeOp, BooleanFunction):
 
     def _eval_simplify(self, **kwargs):
         # standard simplify
-        rv = super(Or, self)._eval_simplify(**kwargs)
+        rv = super()._eval_simplify(**kwargs)
         if not isinstance(rv, Or):
             return rv
         patterns = simplify_patterns_or()
@@ -1018,8 +1017,8 @@ class Xor(BooleanFunction):
 
     """
     def __new__(cls, *args, **kwargs):
-        argset = set([])
-        obj = super(Xor, cls).__new__(cls, *args, **kwargs)
+        argset = set()
+        obj = super().__new__(cls, *args, **kwargs)
         for arg in obj._args:
             if isinstance(arg, Number) or arg in (True, False):
                 if arg:
@@ -1330,7 +1329,7 @@ class Equivalent(BooleanFunction):
             argset.discard(False)
             return And(*[~arg for arg in argset])
         _args = frozenset(argset)
-        obj = super(Equivalent, cls).__new__(cls, _args)
+        obj = super().__new__(cls, _args)
         obj._argset = _args
         return obj
 
@@ -1838,7 +1837,7 @@ def to_int_repr(clauses, symbols):
         else:
             return symbols[arg]
 
-    return [set(append_symbol(arg, symbols) for arg in Or.make_args(c))
+    return [{append_symbol(arg, symbols) for arg in Or.make_args(c)}
             for c in clauses]
 
 

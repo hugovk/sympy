@@ -1,12 +1,10 @@
-from __future__ import print_function, division
-
 from sympy.core.compatibility import range
 from sympy.core.containers import Tuple
 
 from types import FunctionType
 
 
-class TableForm(object):
+class TableForm:
     r"""
     Create a nice table representation of data.
 
@@ -286,7 +284,7 @@ class TableForm(object):
         format_str = []
 
         def _align(align, w):
-            return '%%%s%ss' % (
+            return '%{}{}s'.format(
                 ("-" if align == "l" else ""),
                 str(w))
         format_str = [_align(align, w) for align, w in

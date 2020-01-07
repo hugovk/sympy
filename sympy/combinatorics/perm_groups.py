@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from random import randrange, choice
 from math import log
 from sympy.ntheory import primefactors
@@ -242,7 +240,7 @@ class PermutationGroup(Basic):
         return True
 
     def __hash__(self):
-        return super(PermutationGroup, self).__hash__()
+        return super().__hash__()
 
     def __mul__(self, other):
         """
@@ -2197,7 +2195,7 @@ class PermutationGroup(Basic):
                 block = self.minimal_block([0, x])
                 num_block, m = _number_blocks(block)
                 # a representative block (containing 0)
-                rep = set(j for j in range(self.degree) if num_block[j] == 0)
+                rep = {j for j in range(self.degree) if num_block[j] == 0}
                 # check if the system is minimal with
                 # respect to the already discovere ones
                 minimal = True
@@ -4031,7 +4029,7 @@ class PermutationGroup(Basic):
             # if G_k is transitive on the subset excluding b_0,...,b_(k-1)
             # then G is (k+1)-transitive
             for i in range(n):
-                orb = G.orbit((i))
+                orb = G.orbit(i)
                 if len(orb) != n - i:
                     self._transitivity_degree = i
                     return i
@@ -4432,7 +4430,7 @@ class PermutationGroup(Basic):
 
         # orbit representatives of K_beta
         gammas = [alpha, beta]
-        orbits = list(set(tuple(K_beta.orbit(o)) for o in orbit))
+        orbits = list({tuple(K_beta.orbit(o)) for o in orbit})
         orbit_reps = [orb[0] for orb in orbits]
         for rep in orbit_reps:
             if rep not in gammas:

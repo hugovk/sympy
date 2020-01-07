@@ -14,7 +14,6 @@ Todo:
 * Write some tests/examples!
 """
 
-from __future__ import print_function, division
 
 from sympy import Mul
 from sympy.core.compatibility import range
@@ -40,7 +39,7 @@ matplotlib = import_module(
     catch=(RuntimeError,))  # This is raised in environments that have no display.
 
 if not np or not matplotlib:
-    class CircuitPlot(object):
+    class CircuitPlot:
         def __init__(*args, **kwargs):
             raise ImportError('numpy or matplotlib not available.')
 
@@ -54,7 +53,7 @@ else:
     #from matplotlib import rc
     #rc('text',usetex=True)
 
-    class CircuitPlot(object):
+    class CircuitPlot:
         """A class for managing a circuit plot."""
 
         scale = 1.0
@@ -318,7 +317,7 @@ def render_label(label, inits={}):
     """
     init = inits.get(label)
     if init:
-        return r'$\left|%s\right\rangle=\left|%s\right\rangle$' % (label, init)
+        return r'$\left|{}\right\rangle=\left|{}\right\rangle$'.format(label, init)
     return r'$\left|%s\right\rangle$' % label
 
 def labeller(n, symbol='q'):
@@ -347,7 +346,7 @@ class Mz(OneQubitGate):
     """
     measurement = True
     gate_name='Mz'
-    gate_name_latex=u'M_z'
+    gate_name_latex='M_z'
 
 class Mx(OneQubitGate):
     """Mock-up of an x measurement gate.
@@ -357,7 +356,7 @@ class Mx(OneQubitGate):
     """
     measurement = True
     gate_name='Mx'
-    gate_name_latex=u'M_x'
+    gate_name_latex='M_x'
 
 class CreateOneQubitGate(ManagedProperties):
     def __new__(mcl, name, latexname=None):

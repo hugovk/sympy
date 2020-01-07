@@ -1,5 +1,3 @@
-from __future__ import print_function, division
-
 from sympy.core.compatibility import range, is_sequence
 from sympy.external import import_module
 from sympy.printing.printer import Printer
@@ -96,7 +94,7 @@ class TheanoPrinter(Printer):
 
     def __init__(self, *args, **kwargs):
         self.cache = kwargs.pop('cache', dict())
-        super(TheanoPrinter, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def _get_key(self, s, name=None, dtype=None, broadcastable=None):
         """ Get the cache key for a Sympy object.

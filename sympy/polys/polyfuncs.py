@@ -1,6 +1,5 @@
 """High-level polynomials manipulation functions. """
 
-from __future__ import print_function, division
 
 from sympy.core import S, Basic, Add, Mul, symbols, Dummy
 from sympy.core.compatibility import range
@@ -370,7 +369,7 @@ def viete(f, roots=None, *gens, **args):
     roots = take(roots, n)
 
     if n != len(roots):
-        raise ValueError("required %s roots, got %s" % (n, len(roots)))
+        raise ValueError("required {} roots, got {}".format(n, len(roots)))
 
     lc, coeffs = f.LC(), f.all_coeffs()
     result, sign = [], -1
